@@ -12,8 +12,8 @@
 /build
 
 # misc
-/src/firebase/firebase.utils.js
-/src/components/stripe-button/stripe-button.component.jsx
+# /src/firebase/firebase.utils.js
+# /src/components/stripe-button/stripe-button.component.jsx
 .DS_Store
 .env.local
 .env.development.local
