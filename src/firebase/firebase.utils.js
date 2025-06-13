@@ -1,10 +1,6 @@
 // firebase.utils.js
-import { initializeApp } from 'firebase/app';
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from 'firebase/auth';
+import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import {
   getFirestore,
   doc,
@@ -12,17 +8,26 @@ import {
   setDoc,
   collection,
   writeBatch,
-  getDocs
-} from 'firebase/firestore';
+  getDocs,
+} from "firebase/firestore";
+import {
+  FIREBASE_API_KEY,
+  FIREBASE_APP_ID,
+  FIREBASE_AUTH_DOMAIN,
+  FIREBASE_MEASUREMENT_ID,
+  FIREBASE_MESSAGING_SENDER_ID,
+  FIREBASE_PROJECT_ID,
+  FIREBASE_STORAGE_BUCKET,
+} from "../constants";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB7C0t86jhu7lZj4IxhJF3lw7WvkjkFJvc",
-  authDomain: "ecommerce-db-56f2f.firebaseapp.com",
-  projectId: "ecommerce-db-56f2f",
-  storageBucket: "ecommerce-db-56f2f.firebasestorage.app",
-  messagingSenderId: "842053571659",
-  appId: "1:842053571659:web:502b050c914a9ca549a9ce",
-  measurementId: "G-TSZNFVM1BF"
+  apiKey: FIREBASE_API_KEY,
+  authDomain: FIREBASE_AUTH_DOMAIN,
+  projectId: FIREBASE_PROJECT_ID,
+  storageBucket: FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+  appId: FIREBASE_APP_ID,
+  measurementId: FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase app
@@ -54,7 +59,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         displayName,
         email,
         createdAt,
-        ...additionalData
+        ...additionalData,
       });
     } catch (error) {
       console.log("Error creating user", error.message);
@@ -65,11 +70,14 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 };
 
 // Batch add collections and documents
-export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
   const collectionRef = collection(firestore, collectionKey);
   const batch = writeBatch(firestore);
 
-  objectsToAdd.forEach(obj => {
+  objectsToAdd.forEach((obj) => {
     const newDocRef = doc(collectionRef); // auto-generated ID
     batch.set(newDocRef, obj);
   });
@@ -79,7 +87,7 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
 
 // Convert collections snapshot to map
 export const convertCollectionsSnapshotToMap = (collections) => {
-  const transformedCollection = collections.docs.map(docSnapshot => {
+  const transformedCollection = collections.docs.map((docSnapshot) => {
     const { title, items } = docSnapshot.data();
 
     return {
