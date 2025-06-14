@@ -1,5 +1,8 @@
 .collection-item {
-  width: 22vw;
+  flex: 1 1 21%; // roughly 4 per row
+  max-width: 22vw;
+  min-width: 200px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   height: 350px;
@@ -21,6 +24,7 @@
     top: 255px;
     display: none;
   }
+
   &:hover {
     .image {
       opacity: 0.85;
@@ -29,23 +33,55 @@
     .custom-button {
       opacity: 0.85;
       display: flex;
+      width: 100%;
     }
   }
 
   .collection-footer {
     width: 100%;
-    height: 5%;
+    height: auto;
     display: flex;
     justify-content: space-between;
     font-size: 18px;
+    margin-top: 10px;
 
     .name {
-      width: 90%;
-      margin-bottom: 15px;
+      width: 85%;
+      margin-bottom: 0;
     }
 
     .price {
-      width: 10%;
+      width: 15%;
+      text-align: right;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex: 1 1 45%;
+    max-width: none;
+    height: auto;
+
+    .image {
+      height: 250px;
+    }
+
+    .custom-button {
+      display: block;
+      position: relative;
+      top: auto;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    &:hover .custom-button {
+      display: block;
+    }
+  }
+
+  @media (max-width: 480px) {
+    flex: 1 1 100%;
+    .image {
+      height: 200px;
     }
   }
 }
