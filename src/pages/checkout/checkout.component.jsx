@@ -16,36 +16,46 @@ const CheckoutPage = () => {
   const total = useSelector(selectCartTotal);
 
   return (
-    <div className='checkout-page'>
-      <div className='checkout-header'>
-        <div className='header'>
+    <div className="checkout-page">
+      <div className="checkout-header">
+        <div className="header">
           <span>Product</span>
         </div>
-        <div className='header'>
+        <div className="header">
           <span>Description</span>
         </div>
-        <div className='header'>
+        <div className="header">
           <span>Quantity</span>
         </div>
-        <div className='header'>
+        <div className="header">
           <span>Price</span>
         </div>
-        <div className='header'>
+        <div className="header">
           <span>Remove</span>
         </div>
       </div>
-      {cartItems.map((cartItem) => (
-        <CheckoutItem key={cartItem.id} cartItem={cartItem} />
-      ))}
-      <div className='total'>TOTAL: ${total}</div>
+      {cartItems.length === 0 ? (
+        <div className="checkout-div">
+          <div>No Products exist in the cart.</div>
+        </div>
+      ) : (
+        cartItems.map((cartItem) => (
+          <CheckoutItem key={cartItem.id} cartItem={cartItem} />
+        ))
+      )}
+      <div className="total">TOTAL: ${total}</div>
 
-      <div className='test-warning'>
+      <div className="test-warning">
         *Please use the following test credit card for payments*
         <br />
         4242 4242 4242 4242 - Exp: any future date - CVV: any 3 digits
         <br />
         Refer this Link:{" "}
-        <a href="https://stripe.com/docs/testing" target="_blank" rel="noreferrer">
+        <a
+          href="https://stripe.com/docs/testing"
+          target="_blank"
+          rel="noreferrer"
+        >
           https://stripe.com/docs/testing
         </a>
       </div>
