@@ -39,7 +39,10 @@ export const firestore = getFirestore(firebaseApp);
 
 // Google Auth
 const provider = new GoogleAuthProvider();
-provider.setCustomParameters({ prompt: "select_account" });
+// provider.setCustomParameters({ prompt: "select_account" });
+provider.setCustomParameters({
+  login_hint: "user@example.com",
+});
 
 export const signInWithGoogle = () => signInWithPopup(auth, provider);
 

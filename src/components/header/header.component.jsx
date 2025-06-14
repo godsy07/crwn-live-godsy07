@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { auth } from "../../firebase/firebase.utils";
 
@@ -15,10 +15,17 @@ import {
   OptionLink,
   OptionsContainer,
 } from "./header.styles";
+import { setCurrentUser } from "../../redux/user/user.actions";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const hidden = useSelector(selectCartHidden);
+
+  const handleSignOut = async () => {
+    await auth.signOut();
+    dispatch(setCurrentUser(null));
+  };
 
   return (
     <HeaderContainer>
@@ -29,7 +36,7 @@ const Header = () => {
         <OptionLink to="/shop">SHOP</OptionLink>
         <OptionLink to="/contact">CONTACT</OptionLink>
         {currentUser ? (
-          <OptionLink as="div" onClick={() => auth.signOut()}>
+          <OptionLink as="div" onClick={handleSignOut}>
             SIGN OUT
           </OptionLink>
         ) : (
