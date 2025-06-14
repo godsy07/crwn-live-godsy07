@@ -1,26 +1,32 @@
 import React from "react";
 import StripeCheckout from "react-stripe-checkout";
+import { STRIPE_PUBLISHABLE_KEY } from "../../constants";
+import { useModal } from "../../context/ModalContext";
 
 const StripeCheckoutButton = ({ price }) => {
-  const priceForStripe = price * 100;
-  const publishableKey =
-    "pk_test_51JE5zdSE48tZZxCyMJIOWpMR5Ms1CDNzxcyYQj5O8DOShMKIGBTJUTZKDgwpgXZCw00wBXIELtKGefWTHuixNN0800w6Ys8y4S";
+  const { alertMessage } = useModal();
 
-  const onToken = (token) => {
+  const priceForStripe = price * 100;
+  const publishableKey = STRIPE_PUBLISHABLE_KEY;
+
+  const onToken = async (token) => {
     console.log(token);
-    alert("Payment Successful");
+    await alertMessage({
+      title: "Payment Successful 🎉",
+      message: "Thank you for your purchase!",
+    });
   };
 
   return (
     <StripeCheckout
-      label='Pay Now'
-      name='e-commerce app'
+      label="Pay Now"
+      name="e-commerce app"
       billingAddress
       shippingAddress
-      image=''
+      image=""
       description={`Your total is $${price}`}
       amount={priceForStripe}
-      panelLabel='Pay Now'
+      panelLabel="Pay Now"
       token={onToken}
       stripeKey={publishableKey}
     />
