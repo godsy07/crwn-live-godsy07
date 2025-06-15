@@ -13,6 +13,7 @@ import { setCurrentUser } from "./redux/user/user.actions";
 import { selectCurrentUser } from "./redux/user/user.selectors";
 
 import "./App.css";
+import { onSnapshot } from "firebase/firestore";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const App = () => {
     const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
-        userRef.onSnapshot((snapShot) => {
+       onSnapshot(userRef, (snapShot) => {
           dispatch(
             setCurrentUser({
               id: snapShot.id,
